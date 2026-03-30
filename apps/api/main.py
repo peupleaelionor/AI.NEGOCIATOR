@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .database import init_db
-from .routes import analyze, feedback, payment, referral, slack
+from .routes import analyze, feedback, payment, referral, slack, dashboard, auth
 from .services.cache import init_cache
 
 
@@ -35,6 +35,8 @@ app.include_router(feedback.router)
 app.include_router(payment.router)
 app.include_router(referral.router)
 app.include_router(slack.router)
+app.include_router(dashboard.router)
+app.include_router(auth.router)
 
 
 @app.get("/health")
