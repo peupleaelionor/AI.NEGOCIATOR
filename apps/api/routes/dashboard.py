@@ -22,6 +22,12 @@ async def get_dashboard_stats(user_id: int, db: AsyncSession = Depends(get_db)):
             "plan": "Découverte",
         }
 
+    # Count analyses from feedback table
+    analyses_result = await db.execute(
+        select(func.count(Feedback.id)).where(Feedback.input_text.isnot(None))
+    )
+    total_analyses = analyses_result.scalar() or 0
+
     # Count referrals
     referrals_result = await db.execute(
         select(func.count(User.id)).where(User.referred_by == user_id)
@@ -32,7 +38,7 @@ async def get_dashboard_stats(user_id: int, db: AsyncSession = Depends(get_db)):
     plan = "Pro" if user.subscription_id else "Découverte"
 
     return {
-        "total_analyses": user.credits or 0,
+        "total_analyses": total_analyses,
         "credits_remaining": user.credits or 0,
         "referrals_count": referrals_count,
         "plan": plan,

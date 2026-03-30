@@ -11,13 +11,12 @@ export function getSupabase(): SupabaseClient {
   return _supabase;
 }
 
-// Re-export for backward compatibility
-export const supabase = typeof window !== "undefined"
-  ? createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
-    )
-  : (null as unknown as SupabaseClient);
+// Backward-compatible alias using shared singleton
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    return (getSupabase() as unknown as Record<string, unknown>)[prop as string];
+  },
+});
 
 export async function signInWithMagicLink(email: string) {
   const client = getSupabase();
