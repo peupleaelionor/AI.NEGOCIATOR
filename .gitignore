@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.next/
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Data (large files, not versioned)
+data/raw/
+data/clean/
+data/*.jsonl
+
+# Models (large binary files, not versioned)
+models/
+
+# Build artifacts
+results/
+*.onnx
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# SQLite
+*.db
+*.db-journal
