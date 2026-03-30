@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { supabase } from "../../lib/auth";
+import { getSupabase } from "../../lib/auth";
 import axios from "axios";
 
 interface UserData {
@@ -24,7 +24,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const loadUser = async () => {
-      const { data } = await supabase.auth.getUser();
+      const { data } = await getSupabase().auth.getUser();
       if (data?.user) {
         setUser({ id: data.user.id, email: data.user.email || "" });
 
@@ -49,7 +49,7 @@ export default function DashboardPage() {
   }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await getSupabase().auth.signOut();
     window.location.href = "/";
   };
 

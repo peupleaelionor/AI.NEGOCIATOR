@@ -3,17 +3,19 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+  );
+}
 
 export default function ReferPage() {
   const [user, setUser] = useState<{ id: string } | null>(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
+    getSupabaseClient().auth.getUser().then(({ data }) => {
       if (data?.user) setUser({ id: data.user.id });
     });
   }, []);
