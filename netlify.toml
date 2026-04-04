@@ -5,7 +5,6 @@
 
 [build.environment]
   NODE_VERSION = "20"
-  NEXT_USE_NETLIFY_EDGE = "true"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -14,7 +13,6 @@
   from = "/api/*"
   to = "${NEXT_PUBLIC_API_URL}/:splat"
   status = 200
-  force = true
 
 [[headers]]
   for = "/*"
